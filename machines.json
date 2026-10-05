@@ -877,7 +877,7 @@
    "MA",
    "MA"
   ],
-  "photo": ""
+  "photo": "moulin.jpg"
  },
  {
   "id": "solaire",
@@ -904,7 +904,7 @@
    "MA",
    "US"
   ],
-  "photo": ""
+  "photo": "solaire.jpg"
  },
  {
   "id": "cnc",
@@ -928,6 +928,6 @@
    "CH",
    "MA"
   ],
-  "photo": ""
+  "photo": "cnc.jpg"
  }
 ]
