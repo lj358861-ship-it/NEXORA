@@ -6,13 +6,15 @@
 :root{--bg:#060b1d;--s:#0e1830cc;--s2:#16254a;--tx:#e9eefc;--mu:#8b9bc4;--br:#5b9dff;--up:#38d6b0;--dn:#ff6b7d;--ln:#223562}
 *{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.5 Sora,system-ui,sans-serif;padding-bottom:70px}
 h1,h2,.num{font-family:Fraunces,Georgia,serif}a,button{font:inherit;color:inherit}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ln);position:sticky;top:0;background:var(--bg);z-index:5;gap:8px;flex-wrap:wrap}
-.logo{font:600 22px Fraunces,serif;color:var(--br);display:flex;align-items:center;gap:8px}.logo img{height:44px;background:#fff;border-radius:10px;padding:2px 8px}#bg{position:fixed;inset:0;z-index:-1}.hero{background:linear-gradient(#060b1d99,#060b1dee),url(/img/hero.jpg) center/cover;border-radius:16px;padding:34px 20px!important}.msg{padding:8px 12px;border-radius:12px;margin:6px 0;max-width:80%;background:var(--s2)}.msg.me{margin-left:auto;background:#1d4ed8}.log{height:300px;overflow:auto}.cta{background:linear-gradient(135deg,#1d4ed8,#5b9dff22)}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+header{display:flex;align-items:center;justify-content:space-between;padding:6px 22px;border-bottom:1px solid #b8892e;position:sticky;top:0;background:#000;z-index:5;gap:14px;flex-wrap:wrap}header .row{flex-wrap:nowrap;flex:none}#bal{white-space:nowrap}
+.logo{display:flex;align-items:center;flex:none}.logo img{height:78px;width:auto;display:block;flex:none}#bg{position:fixed;inset:0;z-index:-1}.hero{background:linear-gradient(#060b1d99,#060b1dee),url(/img/hero.jpg) center/cover;border-radius:16px;padding:34px 20px!important}.msg{padding:8px 12px;border-radius:12px;margin:6px 0;max-width:80%;background:var(--s2)}.msg.me{margin-left:auto;background:#1d4ed8}.log{height:300px;overflow:auto}.cta{background:linear-gradient(135deg,#1d4ed8,#5b9dff22)}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 select,input{background:var(--s);border:1px solid var(--ln);color:var(--tx);padding:10px 12px;border-radius:8px;width:100%}select{width:auto}
 .btn{background:var(--br);color:#04102a;border:0;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}.btn.g{background:none;color:var(--tx);border:1px solid var(--ln)}
 :focus-visible{outline:2px solid var(--br);outline-offset:2px}
-main{max-width:1000px;margin:auto;padding:18px}nav{display:flex;gap:4px;overflow-x:auto;margin-bottom:18px;border-bottom:1px solid var(--ln)}
-nav button{background:none;border:0;padding:10px 14px;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}nav button.on{color:var(--br);border-color:var(--br)}
+main{max-width:1000px;margin:auto;padding:18px}nav{display:flex;gap:0;overflow-x:auto;flex:1;min-width:0;justify-content:flex-start;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:0;padding:10px 8px;color:#c9d3ee;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:600;font-size:13px}nav button:hover{color:#fff}nav button.on{color:#e8b94a;border-color:#e8b94a}
+@media(max-width:820px){header{padding:6px 12px}.logo img{height:60px}nav{order:3;flex:1 0 100%;justify-content:flex-start}}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px}.feat .card{padding:18px}.feat h3{font:600 18px Fraunces,serif;margin-bottom:6px}.pt{font-size:26px;margin:0 0 14px;font-family:Fraunces,Georgia,serif}
 .hero{padding:26px 0 8px}.hero h1{font-size:clamp(28px,6vw,46px);line-height:1.1;max-width:15em}.hero p{color:var(--mu);max-width:36em;margin:10px 0 18px}
 .box{background:var(--s);border-radius:14px;padding:16px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
 .card{background:var(--s);border-radius:12px;padding:14px;cursor:pointer;border:1px solid transparent}.card:hover{border-color:var(--ln)}
@@ -24,25 +26,26 @@ table{width:100%;border-collapse:collapse}td,th{padding:9px 6px;border-bottom:1p
 .sc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.sc div{background:var(--s2);border-radius:8px;padding:8px;text-align:center}
 footer{padding:20px;text-align:center}.err{color:var(--dn);font-size:13px;margin-top:8px}
 .th{width:100%;height:96px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--ln)}.thb{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin:8px 0}</style></head><body>
-<canvas id="bg"></canvas><header><span class="logo"><img src="/img/logo.png" alt="" onerror="this.remove()">Nexora</span><div class="row"><select id="country" aria-label="Pays"></select><span id="bal" class="mu"></span><button class="btn g" id="authBtn">Connexion</button></div></header>
+<canvas id="bg"></canvas><header><a class="logo" href="/" aria-label="Nexora - Accueil"><img src="/img/logo-crop.png" alt="Nexora"></a><nav id="tabs"></nav><div class="row"><select id="country" aria-label="Pays"></select><span id="bal" class="mu"></span><button class="btn g" id="authBtn">Connexion</button></div></header>
 <main>
-<section class="hero"><h1>Crypto, bourse et machines industrielles. Un seul compte.</h1><p>Suivez les marchés, comparez les rendements possibles et investissez dans la devise de votre pays. Solde de démonstration de 10 000 $ offert à l'inscription.</p></section>
-<div class="box"><div id="hs" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px"></div><div style="height:140px"><canvas id="hero"></canvas></div></div><nav id="tabs"></nav><div id="view"></div>
+<div id="homeTop"><section class="hero"><h1>Crypto, bourse et machines industrielles. Un seul compte.</h1><p>Suivez les marchés, comparez les rendements possibles et investissez dans la devise de votre pays. Solde de démonstration de 10 000 $ offert à l'inscription.</p></section>
+<div class="box"><div id="hs" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px"></div><div style="height:140px"><canvas id="hero"></canvas></div></div></div><div id="view"></div>
 <p class="warn">Tout investissement comporte un risque de perte en capital. Les rendements affichés sont des scénarios hypothétiques, jamais des promesses. Les cours boursiers et les paiements sont simulés dans cette version de démonstration.</p>
 </main>
 <button class="btn" id="chatBtn" style="position:fixed;right:16px;bottom:16px;display:none;z-index:6" onclick="openChat()">Écrire à l'admin</button><div class="modal" id="m"><div class="panel" id="p"></div></div>
 <script>
 const C={CM:['XAF','FCFA',605],SN:['XOF','FCFA',605],CI:['XOF','FCFA',605],FR:['EUR','€',.92],BE:['EUR','€',.92],CA:['CAD','$',1.36],US:['USD','$',1],GB:['GBP','£',.78],MA:['MAD','DH',10],NG:['NGN','₦',1550],CD:['CDF','FC',2800],GA:['XAF','FCFA',605],CH:['CHF','CHF',.88]};
 const N={CM:'Cameroun',SN:'Sénégal',CI:"Côte d'Ivoire",FR:'France',BE:'Belgique',CA:'Canada',US:'États-Unis',GB:'Royaume-Uni',MA:'Maroc',NG:'Nigeria',CD:'RD Congo',GA:'Gabon',CH:'Suisse'};
-let S={tab:'crypto',m:null,tok:localStorage.tok,user:null,cc:localStorage.cc||'CM',ch:null};
+let S={tab:'home',m:null,tok:localStorage.tok,user:null,cc:localStorage.cc||'CM',ch:null};
 const $=id=>document.getElementById(id);
 const money=u=>{const[c,s,r]=C[S.cc];const v=u*r;return v.toLocaleString('fr-FR',{maximumFractionDigits:v<10?4:v<1000?2:0})+' '+s};
 const pct=x=>`<span class="${x>=0?'up':'dn'}">${x>=0?'+':''}${x.toFixed(2)} %</span>`;
 const api=async(u,o={})=>{const r=await fetch(u,{...o,headers:{'Content-Type':'application/json',...(S.tok?{Authorization:'Bearer '+S.tok}:{})},body:o.body&&JSON.stringify(o.body)});const j=await r.json();if(!r.ok){const e=new Error(j.error||'Erreur');e.data=j;throw e}return j};
 $('country').innerHTML=Object.keys(N).map(k=>`<option value="${k}">${N[k]} (${C[k][0]})</option>`).join('');$('country').value=S.cc;
 $('country').onchange=e=>{S.cc=e.target.value;localStorage.cc=S.cc;render()};
-const TABS=()=>[['crypto','Crypto'],['stocks','Bourse'],['machines','Machines'],['formation','Formation'],['wallet','Portefeuille']];
-function tabs(){$('tabs').innerHTML=TABS().map(t=>`<button class="${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';render()">${t[1]}</button>`).join('')}
+const TABS=()=>[['home','Accueil'],['stocks','Marché en bourse'],['crypto','Crypto'],['machines','Investissement'],['formation','Formation'],['wallet','Portefeuille'],['contact','Contact']];
+const go=t=>{S.tab=t;render();scrollTo(0,0)};
+function tabs(){$('tabs').innerHTML=TABS().map(t=>`<button class="${S.tab===t[0]?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')}
 function spark(id,d,up){new Chart($(id),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:up?'#38d6b0':'#ff6b7d',borderWidth:1.6,pointRadius:0,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}})}
 const XS={NASDAQ:'nasdaq',NYSE:'nyse','Euronext Paris':'euronext',Xetra:'xetra',LSE:'lse',Tokyo:'tokyo','Séoul':'seoul'},slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 function fb(e){if(e.dataset.fb){e.src=e.dataset.fb;delete e.dataset.fb}else e.remove()}
@@ -51,12 +54,21 @@ function pic(x,k,cls){cls=cls||'th';if(k==='c')return `<img class="${cls}" loadi
  return x.photo?`<img class="${cls}" loading="lazy" alt="" src="/img/m/${x.photo}" onerror="fb(this)">`:''}
 function list(a,kind){return `<div class="grid">${a.map((x,i)=>`<div class="card" onclick="openAsset('${kind}',${i})">${pic(x,kind)}<div class="row" style="justify-content:space-between"><b>${x.sym}</b>${pct(x.chg)}</div><div class="mu">${x.name}${x.ex?' · '+x.ex:''}</div><div class="num">${money(x.price)}</div><div style="height:46px"><canvas id="s${kind}${i}"></canvas></div></div>`).join('')}</div>`}
 function render(){tabs();if(!S.m){$('view').innerHTML='<p class="mu">Chargement des marchés…</p>';return}
- const v=$('view');
- if(S.tab==='crypto'){v.innerHTML=list(S.m.crypto,'c');S.m.crypto.forEach((x,i)=>spark('sc'+i,x.spark,x.chg>=0))}
- else if(S.tab==='stocks'){v.innerHTML=list(S.m.stocks,'s');S.m.stocks.forEach((x,i)=>spark('ss'+i,x.spark,x.chg>=0))}
- else if(S.tab==='machines'){v.innerHTML=`<div class="grid">${S.m.machines.map((x,i)=>`<div class="card" onclick="openMachine(${i})">${pic(x,'m')}<b>${x.name}</b><div class="mu">${x.sector} · ${x.power}</div><div class="mu">${x.rate}</div><div class="num">${money(x.price)}</div><div class="mu">Scénarios annuels : ${x.scen.map(s=>Math.round(s*100)+' %').join(' / ')}</div></div>`).join('')}</div>`}
+ const v=$('view');$('homeTop').style.display=S.tab==='home'?'block':'none';
+ if(S.tab==='home')home();
+ else if(S.tab==='contact')contact();
+ else if(S.tab==='crypto'){v.innerHTML='<h2 class="pt">Crypto</h2>'+list(S.m.crypto,'c');S.m.crypto.forEach((x,i)=>spark('sc'+i,x.spark,x.chg>=0))}
+ else if(S.tab==='stocks'){v.innerHTML='<h2 class="pt">Marché en bourse</h2>'+list(S.m.stocks,'s');S.m.stocks.forEach((x,i)=>spark('ss'+i,x.spark,x.chg>=0))}
+ else if(S.tab==='machines'){v.innerHTML=`<h2 class="pt">Investissement en machines industrielles</h2><div class="grid">${S.m.machines.map((x,i)=>`<div class="card" onclick="openMachine(${i})">${pic(x,'m')}<b>${x.name}</b><div class="mu">${x.sector} · ${x.power}</div><div class="mu">${x.rate}</div><div class="num">${money(x.price)}</div><div class="mu">Scénarios annuels : ${x.scen.map(s=>Math.round(s*100)+' %').join(' / ')}</div></div>`).join('')}</div>`}
  else if(S.tab==='formation')formation();else if(S.tab==='admin')admin();else wallet();
  $('chatBtn').style.display=S.user&&!S.user.admin?'block':'none';$('bal').textContent=S.user?'Solde : '+money(S.user.balance):'';$('authBtn').textContent=S.user?'Déconnexion':'Connexion'}
+function home(){$('view').innerHTML=`<div class="feat">
+<div class="card" onclick="go('stocks')"><h3>Marché en bourse</h3><p class="mu">Actions du NASDAQ, NYSE, Euronext, Xetra, LSE, Tokyo et Séoul.</p></div>
+<div class="card" onclick="go('crypto')"><h3>Crypto</h3><p class="mu">Bitcoin, Ethereum, Solana et les principales cryptomonnaies en temps réel.</p></div>
+<div class="card" onclick="go('machines')"><h3>Investissement</h3><p class="mu">Financez des machines industrielles exploitées par des opérateurs.</p></div>
+<div class="card" onclick="go('formation')"><h3>Formation</h3><p class="mu">Apprenez à investir et recevez un bonus à la fin du parcours.</p></div></div>
+<div class="box cta"><h2>Prêt à commencer ?</h2><p class="mu" style="margin:8px 0 14px">Créez votre compte en quelques instants et recevez un solde de démonstration de 10 000 $.</p><button class="btn" onclick="S.user?go('stocks'):authModal(1)">${S.user?'Voir les marchés':'Créer un compte'}</button></div>`}
+function contact(){$('view').innerHTML=`<h2 class="pt">Contact</h2><div class="box"><p>Une question sur un investissement, un paiement ou la formation ? Écrivez-nous, l'équipe vous répond directement dans la messagerie.</p><br>${S.user?'<button class="btn" onclick="openChat()">Écrire à l\'admin</button>':'<button class="btn" onclick="authModal(0)">Se connecter pour écrire</button>'}<p class="mu" style="margin-top:12px">Ne partagez jamais votre mot de passe dans la messagerie.</p></div>`}
 function wallet(){const v=$('view');if(!S.user){v.innerHTML='<div class="box">Connectez-vous pour voir votre portefeuille.<br><br><button class="btn" onclick="authModal(1)">Créer un compte</button></div>';return}
  const u=S.user,t=u.positions.reduce((a,p)=>a+p.amount,0);
  v.innerHTML=`<div class="box"><div class="mu">Valeur totale (solde + investi)</div><div class="num" style="font-size:34px">${money(u.balance+t)}</div><div class="mu">Disponible ${money(u.balance)} · Investi ${money(t)}</div></div>
