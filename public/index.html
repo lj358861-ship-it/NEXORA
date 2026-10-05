@@ -13,7 +13,7 @@ select,input{background:var(--s);border:1px solid var(--ln);color:var(--tx);padd
 :focus-visible{outline:2px solid var(--br);outline-offset:2px}
 main{max-width:1000px;margin:auto;padding:18px}nav{display:flex;gap:0;overflow-x:auto;flex:1;min-width:0;justify-content:flex-start;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
 nav button{background:none;border:0;padding:10px 8px;color:#c9d3ee;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:600;font-size:13px}nav button:hover{color:#fff}nav button.on{color:#e8b94a;border-color:#e8b94a}
-@media(max-width:820px){header{padding:6px 12px}.logo img{height:60px}nav{order:3;flex:1 0 100%;justify-content:flex-start}}
+@media(max-width:820px){header{padding:6px 12px;gap:6px 10px}.logo img{height:56px}nav{order:3;flex:1 0 100%;justify-content:flex-start}header .row{gap:6px}header select{max-width:112px;padding:8px 6px;font-size:12px}header .btn{padding:8px 10px;font-size:13px}}
 .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px}.feat .card{padding:18px}.feat h3{font:600 18px Fraunces,serif;margin-bottom:6px}.pt{font-size:26px;margin:0 0 14px;font-family:Fraunces,Georgia,serif}
 .hero{padding:26px 0 8px}.hero h1{font-size:clamp(28px,6vw,46px);line-height:1.1;max-width:15em}.hero p{color:var(--mu);max-width:36em;margin:10px 0 18px}
 .box{background:var(--s);border-radius:14px;padding:16px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
@@ -25,7 +25,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:9px 6px;border-bottom:1p
 .warn{font-size:12px;color:var(--mu);border-left:3px solid var(--br);padding:6px 10px;margin-top:12px}
 .sc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.sc div{background:var(--s2);border-radius:8px;padding:8px;text-align:center}
 footer{padding:20px;text-align:center}.err{color:var(--dn);font-size:13px;margin-top:8px}
-.th{width:100%;height:96px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--ln)}.thb{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin:8px 0}</style></head><body>
+.th{width:100%;height:auto;aspect-ratio:11/5;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--ln)}.thb{width:100%;height:auto;aspect-ratio:11/5;object-fit:cover;border-radius:10px;margin:8px 0}</style></head><body>
 <canvas id="bg"></canvas><header><a class="logo" href="/" aria-label="Nexora - Accueil"><img src="/img/logo-crop.png" alt="Nexora"></a><nav id="tabs"></nav><div class="row"><select id="country" aria-label="Pays"></select><span id="bal" class="mu"></span><button class="btn g" id="authBtn">Connexion</button></div></header>
 <main>
 <div id="homeTop"><section class="hero"><h1>Crypto, bourse et machines industrielles. Un seul compte.</h1><p>Suivez les marchés, comparez les rendements possibles et investissez dans la devise de votre pays. Solde de démonstration de 10 000 $ offert à l'inscription.</p></section>
@@ -44,7 +44,7 @@ const api=async(u,o={})=>{const r=await fetch(u,{...o,headers:{'Content-Type':'a
 $('country').innerHTML=Object.keys(N).map(k=>`<option value="${k}">${N[k]} (${C[k][0]})</option>`).join('');$('country').value=S.cc;
 $('country').onchange=e=>{S.cc=e.target.value;localStorage.cc=S.cc;render()};
 const TABS=()=>[['home','Accueil'],['stocks','Marché en bourse'],['crypto','Crypto'],['machines','Investissement'],['formation','Formation'],['wallet','Portefeuille'],['contact','Contact']];
-const go=t=>{S.tab=t;render();scrollTo(0,0)};
+const go=t=>{S.tab=t;S.ex=null;render();scrollTo(0,0)};
 function tabs(){$('tabs').innerHTML=TABS().map(t=>`<button class="${S.tab===t[0]?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')}
 function spark(id,d,up){new Chart($(id),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:up?'#38d6b0':'#ff6b7d',borderWidth:1.6,pointRadius:0,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}})}
 const XS={NASDAQ:'nasdaq',NYSE:'nyse','Euronext Paris':'euronext',Xetra:'xetra',LSE:'lse',Tokyo:'tokyo','Séoul':'seoul'},slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -52,16 +52,22 @@ function fb(e){if(e.dataset.fb){e.src=e.dataset.fb;delete e.dataset.fb}else e.re
 function pic(x,k,cls){cls=cls||'th';if(k==='c')return `<img class="${cls}" loading="lazy" alt="" src="/img/c/${x.id}.jpg" onerror="fb(this)">`;
  if(k==='s')return `<img class="${cls}" loading="lazy" alt="" src="/img/s/${slug(x.sym)}.jpg" data-fb="/img/x/${XS[x.ex]||'trading'}.jpg" onerror="fb(this)">`;
  return x.photo?`<img class="${cls}" loading="lazy" alt="" src="/img/m/${x.photo}" onerror="fb(this)">`:''}
-function list(a,kind){return `<div class="grid">${a.map((x,i)=>`<div class="card" onclick="openAsset('${kind}',${i})">${pic(x,kind)}<div class="row" style="justify-content:space-between"><b>${x.sym}</b>${pct(x.chg)}</div><div class="mu">${x.name}${x.ex?' · '+x.ex:''}</div><div class="num">${money(x.price)}</div><div style="height:46px"><canvas id="s${kind}${i}"></canvas></div></div>`).join('')}</div>`}
+function list(a,kind,f){return `<div class="grid">${a.map((x,i)=>f&&!f(x)?'':`<div class="card" onclick="openAsset('${kind}',${i})">${pic(x,kind)}<div class="row" style="justify-content:space-between"><b>${x.sym}</b>${pct(x.chg)}</div><div class="mu">${x.name}${x.ex?' · '+x.ex:''}</div><div class="num">${money(x.price)}</div><div style="height:46px"><canvas id="s${kind}${i}"></canvas></div></div>`).join('')}</div>`}
 function render(){tabs();if(!S.m){$('view').innerHTML='<p class="mu">Chargement des marchés…</p>';return}
  const v=$('view');$('homeTop').style.display=S.tab==='home'?'block':'none';
  if(S.tab==='home')home();
  else if(S.tab==='contact')contact();
  else if(S.tab==='crypto'){v.innerHTML='<h2 class="pt">Crypto</h2>'+list(S.m.crypto,'c');S.m.crypto.forEach((x,i)=>spark('sc'+i,x.spark,x.chg>=0))}
- else if(S.tab==='stocks'){v.innerHTML='<h2 class="pt">Marché en bourse</h2>'+list(S.m.stocks,'s');S.m.stocks.forEach((x,i)=>spark('ss'+i,x.spark,x.chg>=0))}
+ else if(S.tab==='stocks'){bourse()}
  else if(S.tab==='machines'){v.innerHTML=`<h2 class="pt">Investissement en machines industrielles</h2><div class="grid">${S.m.machines.map((x,i)=>`<div class="card" onclick="openMachine(${i})">${pic(x,'m')}<b>${x.name}</b><div class="mu">${x.sector} · ${x.power}</div><div class="mu">${x.rate}</div><div class="num">${money(x.price)}</div><div class="mu">Scénarios annuels : ${x.scen.map(s=>Math.round(s*100)+' %').join(' / ')}</div></div>`).join('')}</div>`}
  else if(S.tab==='formation')formation();else if(S.tab==='admin')admin();else wallet();
  $('chatBtn').style.display=S.user&&!S.user.admin?'block':'none';$('bal').textContent=S.user?'Solde : '+money(S.user.balance):'';$('authBtn').textContent=S.user?'Déconnexion':'Connexion'}
+const EXS=[['NASDAQ','nasdaq','États-Unis'],['NYSE','nyse','États-Unis'],['Euronext Paris','euronext','France'],['Xetra','xetra','Allemagne'],['LSE','lse','Royaume-Uni'],['Tokyo','tokyo','Japon'],['Séoul','seoul','Corée du Sud']];
+function bourse(){const v=$('view');
+ if(!S.ex){v.innerHTML='<h2 class="pt">Marché en bourse</h2><p class="mu" style="margin-bottom:12px">Choisissez une place boursière pour voir ses actions.</p><div class="grid">'+EXS.map(e=>{const n=S.m.stocks.filter(x=>x.ex===e[0]).length;return `<div class="card" onclick="openEx('${e[0]}')"><img class="th" alt="" src="/img/x/${e[1]}.jpg" onerror="fb(this)"><b>${e[0]}</b><div class="mu">${e[2]} · ${n} action${n>1?'s':''}</div></div>`}).join('')+'</div>';return}
+ v.innerHTML=`<div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 class="pt" style="margin:0">${S.ex}</h2><button class="btn g" onclick="openEx(null)">← Toutes les bourses</button></div>`+list(S.m.stocks,'s',x=>x.ex===S.ex);
+ S.m.stocks.forEach((x,i)=>{if(x.ex===S.ex&&$('ss'+i))spark('ss'+i,x.spark,x.chg>=0)})}
+function openEx(e){S.ex=e;render();scrollTo(0,0)}
 function home(){$('view').innerHTML=`<div class="feat">
 <div class="card" onclick="go('stocks')"><h3>Marché en bourse</h3><p class="mu">Actions du NASDAQ, NYSE, Euronext, Xetra, LSE, Tokyo et Séoul.</p></div>
 <div class="card" onclick="go('crypto')"><h3>Crypto</h3><p class="mu">Bitcoin, Ethereum, Solana et les principales cryptomonnaies en temps réel.</p></div>
