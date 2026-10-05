@@ -1,0 +1,933 @@
+[
+ {
+  "id": "conc-mini",
+  "sector": "Concasseur",
+  "name": "Mini-concasseur mobile à mâchoires",
+  "brand": "Dragon, Rubble Master",
+  "power": "60 kW (diesel)",
+  "rate": "15–40 t/h",
+  "price": 95000,
+  "scen": [
+   0.07,
+   0.13,
+   0.2
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR"
+  ],
+  "photo": "conc-mini.jpg"
+ },
+ {
+  "id": "conc-mach",
+  "sector": "Concasseur",
+  "name": "Concasseur à mâchoires mobile",
+  "brand": "Keestrack, Terex Finlay",
+  "power": "220 kW (300 ch)",
+  "rate": "150–250 t/h",
+  "price": 420000,
+  "scen": [
+   0.07,
+   0.14,
+   0.21
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "conc-mach.jpg"
+ },
+ {
+  "id": "conc-cone",
+  "sector": "Concasseur",
+  "name": "Concasseur à cône mobile",
+  "brand": "Kleemann, Terex",
+  "power": "330 kW",
+  "rate": "200–350 t/h",
+  "price": 650000,
+  "scen": [
+   0.07,
+   0.13,
+   0.2
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "conc-cone.jpg"
+ },
+ {
+  "id": "foreuse-p",
+  "sector": "Foreuse à eau",
+  "name": "Foreuse à eau portable 80 m",
+  "brand": "Sunmoy, import Asie",
+  "power": "13 ch (essence)",
+  "rate": "30–60 m/jour (sol tendre)",
+  "price": 14000,
+  "scen": [
+   0.08,
+   0.16,
+   0.26
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA"
+  ],
+  "photo": "foreuse-p.jpg"
+ },
+ {
+  "id": "foreuse-r",
+  "sector": "Foreuse à eau",
+  "name": "Foreuse à eau sur remorque 150 m",
+  "brand": "Sinocoredrill, Fordia",
+  "power": "40 kW",
+  "rate": "60–100 m/jour",
+  "price": 55000,
+  "scen": [
+   0.08,
+   0.16,
+   0.25
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "MA"
+  ],
+  "photo": "foreuse-r.jpg"
+ },
+ {
+  "id": "foreuse-c",
+  "sector": "Foreuse à eau",
+  "name": "Foreuse à eau sur camion 300 m",
+  "brand": "Sinocoredrill, Atlas Copco",
+  "power": "180 kW",
+  "rate": "100–150 m/jour",
+  "price": 190000,
+  "scen": [
+   0.08,
+   0.15,
+   0.24
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA"
+  ],
+  "photo": "foreuse-c.jpg"
+ },
+ {
+  "id": "trac-90",
+  "sector": "Tracteur agricole",
+  "name": "Tracteur 90 ch",
+  "brand": "John Deere, Case IH",
+  "power": "90 ch",
+  "rate": "10–15 ha/jour (labour)",
+  "price": 38000,
+  "scen": [
+   0.06,
+   0.11,
+   0.17
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR"
+  ],
+  "photo": "trac-90.jpg"
+ },
+ {
+  "id": "trac-150",
+  "sector": "Tracteur agricole",
+  "name": "Tracteur 150 ch + chargeur frontal",
+  "brand": "Claas, John Deere",
+  "power": "150 ch",
+  "rate": "20–30 ha/jour",
+  "price": 78000,
+  "scen": [
+   0.06,
+   0.12,
+   0.18
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "trac-150.jpg"
+ },
+ {
+  "id": "trac-bot",
+  "sector": "Tracteur agricole",
+  "name": "Tracteur 110 ch + botteleuse",
+  "brand": "Case IH, Claas",
+  "power": "110 ch",
+  "rate": "200–300 balles/jour",
+  "price": 98000,
+  "scen": [
+   0.06,
+   0.12,
+   0.19
+  ],
+  "countries": [
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH",
+   "MA",
+   "SN",
+   "CI"
+  ],
+  "photo": "trac-bot.jpg"
+ },
+ {
+  "id": "benne-12",
+  "sector": "Camion benne",
+  "name": "Camion benne 12 t (4x2)",
+  "brand": "Renault, Isuzu",
+  "power": "220 ch",
+  "rate": "5–8 rotations/jour (≈60–90 t)",
+  "price": 48000,
+  "scen": [
+   0.07,
+   0.14,
+   0.21
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "benne-12.jpg"
+ },
+ {
+  "id": "benne-25",
+  "sector": "Camion benne",
+  "name": "Camion benne 25 t (6x4)",
+  "brand": "Howo, Shacman",
+  "power": "375 ch",
+  "rate": "4–6 rotations/jour (≈100–150 t)",
+  "price": 68000,
+  "scen": [
+   0.08,
+   0.16,
+   0.25
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR"
+  ],
+  "photo": "benne-25.jpg"
+ },
+ {
+  "id": "benne-40",
+  "sector": "Camion benne",
+  "name": "Camion benne 40 t (8x4)",
+  "brand": "Shacman, Volvo",
+  "power": "430 ch",
+  "rate": "4–6 rotations/jour (≈160–240 t)",
+  "price": 95000,
+  "scen": [
+   0.08,
+   0.16,
+   0.25
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA"
+  ],
+  "photo": "benne-40.jpg"
+ },
+ {
+  "id": "grue-25",
+  "sector": "Grue mobile",
+  "name": "Grue mobile 25 t",
+  "brand": "Zoomlion, XCMG",
+  "power": "200 kW",
+  "rate": "10–25 levages/jour",
+  "price": 135000,
+  "scen": [
+   0.07,
+   0.14,
+   0.22
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "MA"
+  ],
+  "photo": "grue-25.jpg"
+ },
+ {
+  "id": "grue-50",
+  "sector": "Grue mobile",
+  "name": "Grue mobile 50 t",
+  "brand": "Zoomlion, Liebherr",
+  "power": "250 kW",
+  "rate": "10–20 levages/jour",
+  "price": 290000,
+  "scen": [
+   0.07,
+   0.14,
+   0.22
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "grue-50.jpg"
+ },
+ {
+  "id": "grue-cam",
+  "sector": "Grue mobile",
+  "name": "Camion-grue de chargement 60 t·m",
+  "brand": "Palfinger, HIAB",
+  "power": "350 ch",
+  "rate": "6–12 chargements/jour",
+  "price": 165000,
+  "scen": [
+   0.07,
+   0.13,
+   0.2
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "grue-cam.jpg"
+ },
+ {
+  "id": "pelle-6",
+  "sector": "Pelleteuse",
+  "name": "Mini-pelle 6 t",
+  "brand": "Lovol, Kubota",
+  "power": "40 ch",
+  "rate": "80–120 m³/jour",
+  "price": 45000,
+  "scen": [
+   0.07,
+   0.14,
+   0.22
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "pelle-6.jpg"
+ },
+ {
+  "id": "pelle-14",
+  "sector": "Pelleteuse",
+  "name": "Pelleteuse sur chenilles 14 t",
+  "brand": "Volvo, Sany",
+  "power": "105 ch",
+  "rate": "250–350 m³/jour",
+  "price": 98000,
+  "scen": [
+   0.08,
+   0.15,
+   0.23
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "pelle-14.jpg"
+ },
+ {
+  "id": "pelle-20",
+  "sector": "Pelleteuse",
+  "name": "Pelleteuse sur chenilles 20 t",
+  "brand": "Volvo, Caterpillar, Komatsu",
+  "power": "150 ch",
+  "rate": "350–500 m³/jour",
+  "price": 150000,
+  "scen": [
+   0.08,
+   0.15,
+   0.24
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "pelle-20.jpg"
+ },
+ {
+  "id": "scie-m",
+  "sector": "Scierie",
+  "name": "Scie mobile à ruban",
+  "brand": "Wood-Mizer",
+  "power": "25 ch",
+  "rate": "3–6 m³/jour",
+  "price": 34000,
+  "scen": [
+   0.07,
+   0.14,
+   0.22
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR"
+  ],
+  "photo": "scie-m.jpg"
+ },
+ {
+  "id": "scie-s",
+  "sector": "Scierie",
+  "name": "Ligne de sciage semi-industrielle",
+  "brand": "Mebor, Serra",
+  "power": "75 kW",
+  "rate": "15–25 m³/jour",
+  "price": 190000,
+  "scen": [
+   0.07,
+   0.13,
+   0.2
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "CA"
+  ],
+  "photo": "scie-s.jpg"
+ },
+ {
+  "id": "scie-i",
+  "sector": "Scierie",
+  "name": "Ligne de sciage industrielle",
+  "brand": "Mebor, Linck",
+  "power": "200 kW",
+  "rate": "60–100 m³/jour",
+  "price": 480000,
+  "scen": [
+   0.06,
+   0.12,
+   0.18
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "CA",
+   "BE"
+  ],
+  "photo": "scie-i.jpg"
+ },
+ {
+  "id": "froid-18",
+  "sector": "Chambre froide",
+  "name": "Chambre froide 18 m³",
+  "brand": "Bitzer, Copeland",
+  "power": "3 kW",
+  "rate": "Stockage ≈ 4 t de produits frais",
+  "price": 12000,
+  "scen": [
+   0.08,
+   0.15,
+   0.24
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "froid-18.jpg"
+ },
+ {
+  "id": "froid-50",
+  "sector": "Chambre froide",
+  "name": "Chambre froide 50 m³",
+  "brand": "Bitzer, Copeland",
+  "power": "6 kW",
+  "rate": "Stockage ≈ 12 t",
+  "price": 30000,
+  "scen": [
+   0.08,
+   0.15,
+   0.24
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "froid-50.jpg"
+ },
+ {
+  "id": "froid-150",
+  "sector": "Chambre froide",
+  "name": "Entrepôt frigorifique 150 m³",
+  "brand": "Danfoss, Bitzer",
+  "power": "15 kW",
+  "rate": "Stockage ≈ 35 t",
+  "price": 78000,
+  "scen": [
+   0.07,
+   0.14,
+   0.21
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "froid-150.jpg"
+ },
+ {
+  "id": "gen-30",
+  "sector": "Groupe électrogène",
+  "name": "Groupe électrogène 30 kVA",
+  "brand": "Aksa, Perkins",
+  "power": "24 kW",
+  "rate": "Autonomie ≈ 10 h / 60 L",
+  "price": 10500,
+  "scen": [
+   0.06,
+   0.12,
+   0.19
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "gen-30.jpg"
+ },
+ {
+  "id": "gen-100",
+  "sector": "Groupe électrogène",
+  "name": "Groupe électrogène 100 kVA",
+  "brand": "Aksa, Cummins",
+  "power": "80 kW",
+  "rate": "≈ 20 L/h à 75 % de charge",
+  "price": 24000,
+  "scen": [
+   0.06,
+   0.12,
+   0.19
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "gen-100.jpg"
+ },
+ {
+  "id": "gen-500",
+  "sector": "Groupe électrogène",
+  "name": "Groupe électrogène 500 kVA en conteneur",
+  "brand": "Cummins, Electra Molins",
+  "power": "400 kW",
+  "rate": "≈ 100 L/h à 75 % de charge",
+  "price": 92000,
+  "scen": [
+   0.06,
+   0.12,
+   0.18
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "gen-500.jpg"
+ },
+ {
+  "id": "four-s",
+  "sector": "Four industriel",
+  "name": "Four de traitement thermique 400 L",
+  "brand": "Pyradia, Nabertherm",
+  "power": "30 kW (1 000 °C)",
+  "rate": "2–3 cycles/jour",
+  "price": 48000,
+  "scen": [
+   0.06,
+   0.12,
+   0.19
+  ],
+  "countries": [
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH",
+   "MA"
+  ],
+  "photo": "four-s.jpg"
+ },
+ {
+  "id": "four-l",
+  "sector": "Four industriel",
+  "name": "Four industriel à grande capacité",
+  "brand": "Ipsen, Nabertherm",
+  "power": "150 kW",
+  "rate": "1–2 cycles/jour (≈ 1–2 t)",
+  "price": 170000,
+  "scen": [
+   0.06,
+   0.11,
+   0.17
+  ],
+  "countries": [
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH",
+   "MA"
+  ],
+  "photo": "four-l.jpg"
+ },
+ {
+  "id": "four-c",
+  "sector": "Four industriel",
+  "name": "Cabine de séchage et peinture",
+  "brand": "Cefla, Gema",
+  "power": "20 kW",
+  "rate": "15–25 pièces/jour",
+  "price": 42000,
+  "scen": [
+   0.06,
+   0.12,
+   0.18
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH"
+  ],
+  "photo": "four-c.jpg"
+ },
+ {
+  "id": "huile",
+  "sector": "Agro-industrie",
+  "name": "Presse à huile de palme",
+  "brand": "Import Asie",
+  "power": "30 kW",
+  "rate": "1–2 t de régimes/h",
+  "price": 36000,
+  "scen": [
+   0.07,
+   0.14,
+   0.22
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA"
+  ],
+  "photo": ""
+ },
+ {
+  "id": "moulin",
+  "sector": "Agro-industrie",
+  "name": "Moulin à grains industriel",
+  "brand": "Bühler, import Asie",
+  "power": "45 kW",
+  "rate": "1–3 t/h",
+  "price": 30000,
+  "scen": [
+   0.05,
+   0.11,
+   0.18
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "MA"
+  ],
+  "photo": ""
+ },
+ {
+  "id": "solaire",
+  "sector": "Énergie",
+  "name": "Ferme solaire 100 kWc",
+  "brand": "Jinko, Huawei",
+  "power": "100 kWc",
+  "rate": "≈ 150 000 kWh/an",
+  "price": 92000,
+  "scen": [
+   0.05,
+   0.1,
+   0.15
+  ],
+  "countries": [
+   "CM",
+   "SN",
+   "CI",
+   "CD",
+   "GA",
+   "NG",
+   "MA",
+   "FR",
+   "MA",
+   "US"
+  ],
+  "photo": ""
+ },
+ {
+  "id": "cnc",
+  "sector": "Industrie",
+  "name": "Machine CNC 5 axes",
+  "brand": "Haas, DMG Mori",
+  "power": "30 kW",
+  "rate": "Selon pièces usinées",
+  "price": 190000,
+  "scen": [
+   0.06,
+   0.13,
+   0.21
+  ],
+  "countries": [
+   "FR",
+   "BE",
+   "CA",
+   "US",
+   "GB",
+   "CH",
+   "MA"
+  ],
+  "photo": ""
+ }
+]

@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/img/favicon.png"><title>Nexora — Investir crypto, bourse et machines industrielles</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#060b1d;--s:#0e1830cc;--s2:#16254a;--tx:#e9eefc;--mu:#8b9bc4;--br:#5b9dff;--up:#38d6b0;--dn:#ff6b7d;--ln:#223562}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.5 Sora,system-ui,sans-serif;padding-bottom:70px}
+h1,h2,.num{font-family:Fraunces,Georgia,serif}a,button{font:inherit;color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ln);position:sticky;top:0;background:var(--bg);z-index:5;gap:8px;flex-wrap:wrap}
+.logo{font:600 22px Fraunces,serif;color:var(--br);display:flex;align-items:center;gap:8px}.logo img{height:44px;background:#fff;border-radius:10px;padding:2px 8px}#bg{position:fixed;inset:0;z-index:-1}.hero{background:linear-gradient(#060b1d99,#060b1dee),url(/img/hero.jpg) center/cover;border-radius:16px;padding:34px 20px!important}.msg{padding:8px 12px;border-radius:12px;margin:6px 0;max-width:80%;background:var(--s2)}.msg.me{margin-left:auto;background:#1d4ed8}.log{height:300px;overflow:auto}.cta{background:linear-gradient(135deg,#1d4ed8,#5b9dff22)}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select,input{background:var(--s);border:1px solid var(--ln);color:var(--tx);padding:10px 12px;border-radius:8px;width:100%}select{width:auto}
+.btn{background:var(--br);color:#04102a;border:0;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}.btn.g{background:none;color:var(--tx);border:1px solid var(--ln)}
+:focus-visible{outline:2px solid var(--br);outline-offset:2px}
+main{max-width:1000px;margin:auto;padding:18px}nav{display:flex;gap:4px;overflow-x:auto;margin-bottom:18px;border-bottom:1px solid var(--ln)}
+nav button{background:none;border:0;padding:10px 14px;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}nav button.on{color:var(--br);border-color:var(--br)}
+.hero{padding:26px 0 8px}.hero h1{font-size:clamp(28px,6vw,46px);line-height:1.1;max-width:15em}.hero p{color:var(--mu);max-width:36em;margin:10px 0 18px}
+.box{background:var(--s);border-radius:14px;padding:16px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{background:var(--s);border-radius:12px;padding:14px;cursor:pointer;border:1px solid transparent}.card:hover{border-color:var(--ln)}
+.up{color:var(--up)}.dn{color:var(--dn)}.mu{color:var(--mu);font-size:13px}.num{font-size:22px}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:14px;z-index:9}.modal.on{display:flex}
+.panel{background:var(--s);border-radius:14px;padding:20px;width:100%;max-width:460px;max-height:92vh;overflow:auto}.panel label{display:block;margin:10px 0 4px;color:var(--mu);font-size:13px}
+table{width:100%;border-collapse:collapse}td,th{padding:9px 6px;border-bottom:1px solid var(--ln);text-align:left;font-weight:400}th{color:var(--mu);font-size:13px}
+.warn{font-size:12px;color:var(--mu);border-left:3px solid var(--br);padding:6px 10px;margin-top:12px}
+.sc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.sc div{background:var(--s2);border-radius:8px;padding:8px;text-align:center}
+footer{padding:20px;text-align:center}.err{color:var(--dn);font-size:13px;margin-top:8px}
+</style></head><body>
+<canvas id="bg"></canvas><header><span class="logo"><img src="/img/logo.png" alt="" onerror="this.remove()">Nexora</span><div class="row"><select id="country" aria-label="Pays"></select><span id="bal" class="mu"></span><button class="btn g" id="authBtn">Connexion</button></div></header>
+<main>
+<section class="hero"><h1>Crypto, bourse et machines industrielles. Un seul compte.</h1><p>Suivez les marchés, comparez les rendements possibles et investissez dans la devise de votre pays. Solde de démonstration de 10 000 $ offert à l'inscription.</p></section>
+<div class="box"><div id="hs" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px"></div><div style="height:140px"><canvas id="hero"></canvas></div></div><nav id="tabs"></nav><div id="view"></div>
+<p class="warn">Tout investissement comporte un risque de perte en capital. Les rendements affichés sont des scénarios hypothétiques, jamais des promesses. Les cours boursiers et les paiements sont simulés dans cette version de démonstration.</p>
+</main>
+<button class="btn" id="chatBtn" style="position:fixed;right:16px;bottom:16px;display:none;z-index:6" onclick="openChat()">Écrire à l'admin</button><div class="modal" id="m"><div class="panel" id="p"></div></div>
+<script>
+const C={CM:['XAF','FCFA',605],SN:['XOF','FCFA',605],CI:['XOF','FCFA',605],FR:['EUR','€',.92],BE:['EUR','€',.92],CA:['CAD','$',1.36],US:['USD','$',1],GB:['GBP','£',.78],MA:['MAD','DH',10],NG:['NGN','₦',1550],CD:['CDF','FC',2800],GA:['XAF','FCFA',605],CH:['CHF','CHF',.88]};
+const N={CM:'Cameroun',SN:'Sénégal',CI:"Côte d'Ivoire",FR:'France',BE:'Belgique',CA:'Canada',US:'États-Unis',GB:'Royaume-Uni',MA:'Maroc',NG:'Nigeria',CD:'RD Congo',GA:'Gabon',CH:'Suisse'};
+let S={tab:'crypto',m:null,tok:localStorage.tok,user:null,cc:localStorage.cc||'CM',ch:null};
+const $=id=>document.getElementById(id);
+const money=u=>{const[c,s,r]=C[S.cc];const v=u*r;return v.toLocaleString('fr-FR',{maximumFractionDigits:v<10?4:v<1000?2:0})+' '+s};
+const pct=x=>`<span class="${x>=0?'up':'dn'}">${x>=0?'+':''}${x.toFixed(2)} %</span>`;
+const api=async(u,o={})=>{const r=await fetch(u,{...o,headers:{'Content-Type':'application/json',...(S.tok?{Authorization:'Bearer '+S.tok}:{})},body:o.body&&JSON.stringify(o.body)});const j=await r.json();if(!r.ok){const e=new Error(j.error||'Erreur');e.data=j;throw e}return j};
+$('country').innerHTML=Object.keys(N).map(k=>`<option value="${k}">${N[k]} (${C[k][0]})</option>`).join('');$('country').value=S.cc;
+$('country').onchange=e=>{S.cc=e.target.value;localStorage.cc=S.cc;render()};
+const TABS=()=>[['crypto','Crypto'],['stocks','Bourse'],['machines','Machines'],['formation','Formation'],['wallet','Portefeuille']];
+function tabs(){$('tabs').innerHTML=TABS().map(t=>`<button class="${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';render()">${t[1]}</button>`).join('')}
+function spark(id,d,up){new Chart($(id),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:up?'#38d6b0':'#ff6b7d',borderWidth:1.6,pointRadius:0,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}})}
+function list(a,kind){return `<div class="grid">${a.map((x,i)=>`<div class="card" onclick="openAsset('${kind}',${i})"><div class="row" style="justify-content:space-between"><b>${x.sym}</b>${pct(x.chg)}</div><div class="mu">${x.name}${x.ex?' · '+x.ex:''}</div><div class="num">${money(x.price)}</div><div style="height:46px"><canvas id="s${kind}${i}"></canvas></div></div>`).join('')}</div>`}
+function render(){tabs();if(!S.m){$('view').innerHTML='<p class="mu">Chargement des marchés…</p>';return}
+ const v=$('view');
+ if(S.tab==='crypto'){v.innerHTML=list(S.m.crypto,'c');S.m.crypto.forEach((x,i)=>spark('sc'+i,x.spark,x.chg>=0))}
+ else if(S.tab==='stocks'){v.innerHTML=list(S.m.stocks,'s');S.m.stocks.forEach((x,i)=>spark('ss'+i,x.spark,x.chg>=0))}
+ else if(S.tab==='machines'){v.innerHTML=`<div class="grid">${S.m.machines.map((x,i)=>`<div class="card" onclick="openMachine(${i})"><b>${x.name}</b><div class="mu">${x.sector} · ${x.power}</div><div class="mu">${x.rate}</div><div class="num">${money(x.price)}</div><div class="mu">Scénarios annuels : ${x.scen.map(s=>Math.round(s*100)+' %').join(' / ')}</div></div>`).join('')}</div>`}
+ else if(S.tab==='formation')formation();else if(S.tab==='admin')admin();else wallet();
+ $('chatBtn').style.display=S.user&&!S.user.admin?'block':'none';$('bal').textContent=S.user?'Solde : '+money(S.user.balance):'';$('authBtn').textContent=S.user?'Déconnexion':'Connexion'}
+function wallet(){const v=$('view');if(!S.user){v.innerHTML='<div class="box">Connectez-vous pour voir votre portefeuille.<br><br><button class="btn" onclick="authModal(1)">Créer un compte</button></div>';return}
+ const u=S.user,t=u.positions.reduce((a,p)=>a+p.amount,0);
+ v.innerHTML=`<div class="box"><div class="mu">Valeur totale (solde + investi)</div><div class="num" style="font-size:34px">${money(u.balance+t)}</div><div class="mu">Disponible ${money(u.balance)} · Investi ${money(t)}</div></div>
+ <div class="box"><canvas id="pie" height="140"></canvas></div>
+ <div class="box"><table><tr><th>Actif</th><th>Montant</th><th>Date</th><th></th></tr>${u.positions.map((p,i)=>`<tr><td>${p.name}</td><td>${money(p.amount)}</td><td class="mu">${p.date.slice(0,10)}</td><td><button class="btn g" onclick="sell(${i})">Clôturer</button></td></tr>`).join('')||'<tr><td colspan=4 class="mu">Aucun investissement pour le moment.</td></tr>'}</table></div>`;
+ if(u.positions.length)new Chart($('pie'),{type:'doughnut',data:{labels:u.positions.map(p=>p.name),datasets:[{data:u.positions.map(p=>p.amount),backgroundColor:['#5b9dff','#38d6b0','#ff6b7d','#6c8ebf','#b58de0','#8b9bc4']}]},options:{plugins:{legend:{labels:{color:'#e9eefc'}}}}})}
+const FS={attente_paiement:'En attente de paiement (500 €)',payee:'Formation active',terminee:'Terminée, bonus de 200 € crédité'};
+function formation(){const f=S.user&&S.user.formation;$('view').innerHTML=`<div class="box cta"><h2>Formation à l'investissement</h2><p style="margin:8px 0">Apprenez à analyser les marchés crypto et boursiers, à gérer le risque et à évaluer un projet industriel. Prix : <b>500 €</b> (${money(500/0.92)}). À la fin de la formation, un <b>bonus de 200 €</b> est crédité sur votre solde.</p>
+<p class="mu">Le bonus récompense la fin de la formation. Il n'est pas un rendement d'investissement et ne garantit aucun gain.</p><br>${f?`<b>Statut : ${FS[f.status]}</b><br><br><button class="btn g" onclick="openChat()">Discuter avec l'admin</button>`:`<button class="btn" onclick="enroll()">S'inscrire à la formation</button>`}</div>`}
+async function enroll(){if(!S.user)return authModal(1);S.user=await api('/api/formation',{method:'POST'});render();openChat()}
+function logHtml(a,me){return a.map(m=>`<div class="msg ${m.from===me?'me':''}">${m.text.replace(/</g,'&lt;')}</div>`).join('')}
+async function chatLoop(url,me){const l=$('log');if(!l)return;const a=await api(url);l.innerHTML=logHtml(a,me);l.scrollTop=1e9}
+function chatPanel(title,url,me,extra=''){modal(`<div class="row" style="justify-content:space-between"><h2>${title}</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="log" id="log"></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><input id="tx" placeholder="Votre message…"><button class="btn" onclick="send('${url}','${me}')">Envoyer</button></div>${extra}`);chatLoop(url,me);S.poll=setInterval(()=>chatLoop(url,me),5000)}
+async function send(url,me){const t=$('tx').value.trim();if(!t)return;$('tx').value='';await api(url,{method:'POST',body:{text:t}});chatLoop(url,me)}
+function openChat(){chatPanel('Discussion avec l\'admin','/api/chat','user','<p class="mu" style="margin-top:8px">Pour un paiement ou une question, l\'admin vous répond ici. Ne partagez jamais votre mot de passe.</p>')}
+async function admin(){const a=await api('/api/admin/threads');$('view').innerHTML=`<div class="box"><table><tr><th>Client</th><th>Pays</th><th>Formation</th><th>Dernier message</th></tr>${a.map(u=>`<tr style="cursor:pointer" onclick="adminChat('${u.id}','${u.name.replace(/'/g,'')}')"><td>${u.name}<div class="mu">${u.email}</div></td><td>${u.country}</td><td>${u.formation?FS[u.formation.status]:'-'}</td><td class="mu">${u.last?u.last.text.slice(0,40):''}</td></tr>`).join('')||'<tr><td colspan=4 class="mu">Aucun client.</td></tr>'}</table></div>`}
+function adminChat(id,n){const u='/api/admin/chat/'+id;chatPanel(n,u,'admin',`<div class="row" style="margin-top:10px"><input id="cr" type="number" placeholder="Créditer ($ USD)" style="width:150px"><button class="btn g" onclick="adm('credit','${id}',{usd:+$('cr').value})">Créditer</button><button class="btn g" onclick="adm('formation','${id}',{status:'payee'})">Formation payée</button><button class="btn g" onclick="adm('formation','${id}',{status:'terminee'})">Terminée (+200 €)</button></div><div id="e" class="err"></div>`)}
+async function adm(k,id,b){try{await api('/api/admin/'+k+'/'+id,{method:'POST',body:b});chatLoop('/api/admin/chat/'+id,'admin')}catch(e){$('e').textContent=e.message}}
+function live(id,seed){const d=seed.slice(-50);let v=d[d.length-1],n=d.length;const ch=new Chart($(id),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderWidth:2,pointRadius:0,tension:.35,segment:{borderColor:c=>c.p1.parsed.y>=c.p0.parsed.y?'#38d6b0':'#ff6b7d'}}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{ticks:{color:'#8b9bc4'},grid:{color:'#223562'}}}}});
+const t=setInterval(()=>{if(!document.getElementById(id)){clearInterval(t);return}v*=1+(Math.random()-.5)*.014+Math.sin(n/9)*.002;ch.data.labels.push(n++);ch.data.datasets[0].data.push(v);if(ch.data.labels.length>60){ch.data.labels.shift();ch.data.datasets[0].data.shift()}ch.update()},1000);return{destroy(){clearInterval(t);ch.destroy()}}}
+async function order(name,sym){if(!S.user){close_();return authModal(0)}const a=+$('amt').value;if(!(a>0)){$('e').textContent='Entrez un montant';return}
+ try{await api('/api/order',{method:'POST',body:{name,sym,amount:a,cur:C[S.cc][0]}});close_();openChat()}catch(e){$('e').textContent=e.message}}
+const cpt=u=>new Intl.NumberFormat('fr-FR',{notation:'compact',maximumFractionDigits:1}).format(u*C[S.cc][2])+' '+C[S.cc][1];
+function heroUpdate(){if(!S.m)return;const a=['bitcoin','ethereum','solana'].map(i=>S.m.crypto.find(c=>c.id===i)).filter(Boolean);
+ $('hs').innerHTML=a.map(x=>`<div><div class="mu">${x.sym}</div><div class="num" style="font-size:18px">${money(x.price)}</div><div class="mu">${pct(x.chg)} · Vol. 24 h ${cpt(x.vol)}</div></div>`).join('')+(a[0]&&a[0].demo?'<div class="mu" style="grid-column:1/-1">Données de démonstration</div>':'');
+ if(!S.hero&&a[0])S.hero=live('hero',a[0].spark)}
+function modal(h){$('p').innerHTML=h;$('m').classList.add('on')}function close_(){clearInterval(S.poll);$('m').classList.remove('on');S.ch&&S.ch.destroy()}
+$('m').onclick=e=>{if(e.target.id==='m')close_()};
+function openAsset(k,i){const x=(k==='c'?S.m.crypto:S.m.stocks)[i];
+ modal(`<div class="row" style="justify-content:space-between"><h2>${x.name} (${x.sym})</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="num">${money(x.price)} ${pct(x.chg)}</div><div style="height:200px;margin:10px 0"><canvas id="big"></canvas></div>
+ <label>Montant à investir (${C[S.cc][0]})</label><input id="amt" type="number" min="1" placeholder="ex. 50000">${k==='s'?`<button class="btn" style="margin-top:12px;width:100%" onclick="order('${x.name.replace(/'/g,'')}','${x.sym}')">Acheter des actions</button><p class="mu" style="margin-top:6px">Votre demande est envoyée à l'admin, qui confirme le prix et le paiement dans la messagerie.</p>`:`<button class="btn" style="margin-top:12px;width:100%" onclick="invest('crypto','${x.id}','${x.name}',${x.price})">Investir</button>`}<div id="e" class="err"></div>${x.demo?'<p class="mu">Cours de démonstration.</p>':''}`);
+ S.ch=live('big',x.spark)}
+function openMachine(i){const m=S.m.machines[i],L=['Prudent','Moyen','Optimiste'];
+ modal(`<div class="row" style="justify-content:space-between"><h2>${m.name}</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="mu">${m.sector} · prix ${money(m.price)}</div><div class="mu" style="margin-top:6px">Marques de référence : ${m.brand}<br>Puissance : ${m.power}<br>Cadence : ${m.rate}<br>Pays : ${m.countries.map(c=>N[c]).join(", ")}</div>
+ <p style="margin-top:8px">Votre capital finance une part de la machine, exploitée par un opérateur. Les revenus dépendent du taux d'utilisation, de la maintenance et du marché local.</p>
+ <div class="sc">${m.scen.map((s,j)=>`<div><div class="mu">${L[j]}</div><b>${Math.round(s*100)} %/an</b></div>`).join('')}</div><div style="height:160px"><canvas id="big"></canvas></div>
+ <label>Montant à investir (${C[S.cc][0]})</label><input id="amt" type="number" min="1" oninput="proj(${i})"><div id="pr" class="mu" style="margin-top:6px"></div>
+ <button class="btn" style="margin-top:12px;width:100%" onclick="invest('machine','${m.id}','${m.name}',${m.price})">Investir</button><div id="e" class="err"></div><p class="warn">Scénarios hypothétiques. Une machine peut rester inutilisée ou tomber en panne : le capital peut être perdu en partie ou en totalité.</p>`);
+ S.ch=new Chart($('big'),{type:'line',data:{labels:[0,1,2,3,4,5],datasets:m.scen.map((s,j)=>({label:L[j],data:[0,1,2,3,4,5].map(y=>+(100*Math.pow(1+s,y)).toFixed(1)),borderColor:['#8b9bc4','#5b9dff','#38d6b0'][j],pointRadius:0,tension:.3}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#e9eefc'}}},scales:{x:{ticks:{color:'#8b9bc4'},title:{display:true,text:'Années',color:'#8b9bc4'}},y:{ticks:{color:'#8b9bc4'},grid:{color:'#223562'}}}}})}
+function proj(i){const m=S.m.machines[i],a=+$('amt').value;$('pr').textContent=a>0?'Après 1 an (hypothèse) : '+m.scen.map(s=>money(a/C[S.cc][2]*(1+s)*1)).join(' / '):''}
+async function invest(kind,id,name,price){if(!S.user){close_();return authModal(0)}
+ const a=+$('amt').value/C[S.cc][2];try{S.user=await api('/api/invest',{method:'POST',body:{kind,id,name,amount:a,price}});close_();S.tab='wallet';render()}catch(e){$('e').textContent=e.message}}
+async function sell(i){S.user=await api('/api/sell',{method:'POST',body:{index:i}});render()}
+function authModal(reg){modal(`<h2>${reg?'Créer un compte':'Connexion'}</h2>${reg?'<label>Nom</label><input id="n">':''}<label>Email</label><input id="em" type="email"><label>Mot de passe</label><input id="pw" type="password">
+ <button class="btn" style="margin-top:14px;width:100%" onclick="doAuth(${reg})">${reg?'Créer mon compte':'Se connecter'}</button><div id="e" class="err"></div>
+ <p class="mu" style="margin-top:10px;cursor:pointer" onclick="authModal(${reg?0:1})">${reg?'Déjà inscrit ? Se connecter':'Pas de compte ? En créer un'}</p>`)}
+async function doAuth(reg){try{const r=await api(reg?'/api/register':'/api/login',{method:'POST',body:{name:reg&&$('n').value,email:$('em').value,password:$('pw').value,country:S.cc}});if(r.verify)return verifyModal(r.email);S.tok=localStorage.tok=r.token;S.user=r.user;close_();render()}catch(e){if(e.data&&e.data.needVerify){await api('/api/resend',{method:'POST',body:{email:e.data.email}});return verifyModal(e.data.email)}$('e').textContent=e.message}}
+function verifyModal(em){modal(`<h2>Vérifiez votre email</h2><p class="mu">Un code à 6 chiffres a été envoyé à ${em}. Pensez à regarder les spams.</p><label>Code</label><input id="cd" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><button class="btn" style="margin-top:14px;width:100%" onclick="doVerify('${em}')">Valider</button><div id="e" class="err"></div><p class="mu" style="margin-top:10px;cursor:pointer" onclick="api('/api/resend',{method:'POST',body:{email:'${em}'}}).then(()=>$('e').textContent='Nouveau code envoyé (1 par minute).')">Renvoyer le code</p>`)}
+async function doVerify(em){try{const r=await api('/api/verify',{method:'POST',body:{email:em,code:$('cd').value}});S.tok=localStorage.tok=r.token;S.user=r.user;close_();render()}catch(e){$('e').textContent=e.message}}
+$('authBtn').onclick=()=>{if(S.user){S.user=null;S.tok=localStorage.tok='';render()}else authModal(0)};
+(()=>{const c=$('bg'),x=c.getContext('2d');let P=[];const R=()=>{c.width=innerWidth;c.height=innerHeight;P=Array.from({length:Math.min(90,innerWidth/12|0)},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))};R();onresize=R;
+const L=()=>{x.clearRect(0,0,c.width,c.height);P.forEach((p,i)=>{p.x=(p.x+p.vx+c.width)%c.width;p.y=(p.y+p.vy+c.height)%c.height;x.fillStyle='#5b9dff';x.globalAlpha=.7;x.fillRect(p.x,p.y,2,2);for(let j=i+1;j<P.length;j++){const d=Math.hypot(p.x-P[j].x,p.y-P[j].y);if(d<120){x.globalAlpha=.15*(1-d/120);x.strokeStyle='#5b9dff';x.beginPath();x.moveTo(p.x,p.y);x.lineTo(P[j].x,P[j].y);x.stroke()}}});requestAnimationFrame(L)};
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)L()})();
+(async()=>{render();S.m=await api('/api/market');heroUpdate();if(S.tok)try{S.user=await api('/api/me')}catch(e){}render()})();
+setInterval(async()=>{if(!$('m').classList.contains('on')&&S.tab!=='wallet'){S.m=await api('/api/market');heroUpdate();render()}},90000);
+</script></body></html>
