@@ -23,7 +23,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:9px 6px;border-bottom:1p
 .warn{font-size:12px;color:var(--mu);border-left:3px solid var(--br);padding:6px 10px;margin-top:12px}
 .sc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.sc div{background:var(--s2);border-radius:8px;padding:8px;text-align:center}
 footer{padding:20px;text-align:center}.err{color:var(--dn);font-size:13px;margin-top:8px}
-</style></head><body>
+.th{width:100%;height:96px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:var(--ln)}.thb{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin:8px 0}</style></head><body>
 <canvas id="bg"></canvas><header><span class="logo"><img src="/img/logo.png" alt="" onerror="this.remove()">Nexora</span><div class="row"><select id="country" aria-label="Pays"></select><span id="bal" class="mu"></span><button class="btn g" id="authBtn">Connexion</button></div></header>
 <main>
 <section class="hero"><h1>Crypto, bourse et machines industrielles. Un seul compte.</h1><p>Suivez les marchés, comparez les rendements possibles et investissez dans la devise de votre pays. Solde de démonstration de 10 000 $ offert à l'inscription.</p></section>
@@ -44,12 +44,17 @@ $('country').onchange=e=>{S.cc=e.target.value;localStorage.cc=S.cc;render()};
 const TABS=()=>[['crypto','Crypto'],['stocks','Bourse'],['machines','Machines'],['formation','Formation'],['wallet','Portefeuille']];
 function tabs(){$('tabs').innerHTML=TABS().map(t=>`<button class="${S.tab===t[0]?'on':''}" onclick="S.tab='${t[0]}';render()">${t[1]}</button>`).join('')}
 function spark(id,d,up){new Chart($(id),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:up?'#38d6b0':'#ff6b7d',borderWidth:1.6,pointRadius:0,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}})}
-function list(a,kind){return `<div class="grid">${a.map((x,i)=>`<div class="card" onclick="openAsset('${kind}',${i})"><div class="row" style="justify-content:space-between"><b>${x.sym}</b>${pct(x.chg)}</div><div class="mu">${x.name}${x.ex?' · '+x.ex:''}</div><div class="num">${money(x.price)}</div><div style="height:46px"><canvas id="s${kind}${i}"></canvas></div></div>`).join('')}</div>`}
+const XS={NASDAQ:'nasdaq',NYSE:'nyse','Euronext Paris':'euronext',Xetra:'xetra',LSE:'lse',Tokyo:'tokyo','Séoul':'seoul'},slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function fb(e){if(e.dataset.fb){e.src=e.dataset.fb;delete e.dataset.fb}else e.remove()}
+function pic(x,k,cls){cls=cls||'th';if(k==='c')return `<img class="${cls}" loading="lazy" alt="" src="/img/c/${x.id}.jpg" onerror="fb(this)">`;
+ if(k==='s')return `<img class="${cls}" loading="lazy" alt="" src="/img/s/${slug(x.sym)}.jpg" data-fb="/img/x/${XS[x.ex]||'trading'}.jpg" onerror="fb(this)">`;
+ return x.photo?`<img class="${cls}" loading="lazy" alt="" src="/img/m/${x.photo}" onerror="fb(this)">`:''}
+function list(a,kind){return `<div class="grid">${a.map((x,i)=>`<div class="card" onclick="openAsset('${kind}',${i})">${pic(x,kind)}<div class="row" style="justify-content:space-between"><b>${x.sym}</b>${pct(x.chg)}</div><div class="mu">${x.name}${x.ex?' · '+x.ex:''}</div><div class="num">${money(x.price)}</div><div style="height:46px"><canvas id="s${kind}${i}"></canvas></div></div>`).join('')}</div>`}
 function render(){tabs();if(!S.m){$('view').innerHTML='<p class="mu">Chargement des marchés…</p>';return}
  const v=$('view');
  if(S.tab==='crypto'){v.innerHTML=list(S.m.crypto,'c');S.m.crypto.forEach((x,i)=>spark('sc'+i,x.spark,x.chg>=0))}
  else if(S.tab==='stocks'){v.innerHTML=list(S.m.stocks,'s');S.m.stocks.forEach((x,i)=>spark('ss'+i,x.spark,x.chg>=0))}
- else if(S.tab==='machines'){v.innerHTML=`<div class="grid">${S.m.machines.map((x,i)=>`<div class="card" onclick="openMachine(${i})"><b>${x.name}</b><div class="mu">${x.sector} · ${x.power}</div><div class="mu">${x.rate}</div><div class="num">${money(x.price)}</div><div class="mu">Scénarios annuels : ${x.scen.map(s=>Math.round(s*100)+' %').join(' / ')}</div></div>`).join('')}</div>`}
+ else if(S.tab==='machines'){v.innerHTML=`<div class="grid">${S.m.machines.map((x,i)=>`<div class="card" onclick="openMachine(${i})">${pic(x,'m')}<b>${x.name}</b><div class="mu">${x.sector} · ${x.power}</div><div class="mu">${x.rate}</div><div class="num">${money(x.price)}</div><div class="mu">Scénarios annuels : ${x.scen.map(s=>Math.round(s*100)+' %').join(' / ')}</div></div>`).join('')}</div>`}
  else if(S.tab==='formation')formation();else if(S.tab==='admin')admin();else wallet();
  $('chatBtn').style.display=S.user&&!S.user.admin?'block':'none';$('bal').textContent=S.user?'Solde : '+money(S.user.balance):'';$('authBtn').textContent=S.user?'Déconnexion':'Connexion'}
 function wallet(){const v=$('view');if(!S.user){v.innerHTML='<div class="box">Connectez-vous pour voir votre portefeuille.<br><br><button class="btn" onclick="authModal(1)">Créer un compte</button></div>';return}
@@ -81,11 +86,11 @@ function heroUpdate(){if(!S.m)return;const a=['bitcoin','ethereum','solana'].map
 function modal(h){$('p').innerHTML=h;$('m').classList.add('on')}function close_(){clearInterval(S.poll);$('m').classList.remove('on');S.ch&&S.ch.destroy()}
 $('m').onclick=e=>{if(e.target.id==='m')close_()};
 function openAsset(k,i){const x=(k==='c'?S.m.crypto:S.m.stocks)[i];
- modal(`<div class="row" style="justify-content:space-between"><h2>${x.name} (${x.sym})</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="num">${money(x.price)} ${pct(x.chg)}</div><div style="height:200px;margin:10px 0"><canvas id="big"></canvas></div>
+ modal(`<div class="row" style="justify-content:space-between"><h2>${x.name} (${x.sym})</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="num">${money(x.price)} ${pct(x.chg)}</div>${pic(x,k,'thb')}<div style="height:200px;margin:10px 0"><canvas id="big"></canvas></div>
  <label>Montant à investir (${C[S.cc][0]})</label><input id="amt" type="number" min="1" placeholder="ex. 50000">${k==='s'?`<button class="btn" style="margin-top:12px;width:100%" onclick="order('${x.name.replace(/'/g,'')}','${x.sym}')">Acheter des actions</button><p class="mu" style="margin-top:6px">Votre demande est envoyée à l'admin, qui confirme le prix et le paiement dans la messagerie.</p>`:`<button class="btn" style="margin-top:12px;width:100%" onclick="invest('crypto','${x.id}','${x.name}',${x.price})">Investir</button>`}<div id="e" class="err"></div>${x.demo?'<p class="mu">Cours de démonstration.</p>':''}`);
  S.ch=live('big',x.spark)}
 function openMachine(i){const m=S.m.machines[i],L=['Prudent','Moyen','Optimiste'];
- modal(`<div class="row" style="justify-content:space-between"><h2>${m.name}</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="mu">${m.sector} · prix ${money(m.price)}</div><div class="mu" style="margin-top:6px">Marques de référence : ${m.brand}<br>Puissance : ${m.power}<br>Cadence : ${m.rate}<br>Pays : ${m.countries.map(c=>N[c]).join(", ")}</div>
+ modal(`<div class="row" style="justify-content:space-between"><h2>${m.name}</h2><button class="btn g" onclick="close_()">Fermer</button></div><div class="mu">${m.sector} · prix ${money(m.price)}</div>${pic(m,'m','thb')}<div class="mu" style="margin-top:6px">Marques de référence : ${m.brand}<br>Puissance : ${m.power}<br>Cadence : ${m.rate}<br>Pays : ${m.countries.map(c=>N[c]).join(", ")}</div>
  <p style="margin-top:8px">Votre capital finance une part de la machine, exploitée par un opérateur. Les revenus dépendent du taux d'utilisation, de la maintenance et du marché local.</p>
  <div class="sc">${m.scen.map((s,j)=>`<div><div class="mu">${L[j]}</div><b>${Math.round(s*100)} %/an</b></div>`).join('')}</div><div style="height:160px"><canvas id="big"></canvas></div>
  <label>Montant à investir (${C[S.cc][0]})</label><input id="amt" type="number" min="1" oninput="proj(${i})"><div id="pr" class="mu" style="margin-top:6px"></div>
